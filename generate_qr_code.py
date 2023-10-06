@@ -1,5 +1,9 @@
-import argparse
+"""
+Creates QR Code based off of user inputs and saves to file.
+"""
 from pathlib import Path
+from typing import Tuple
+import inquirer
 import qrcode
 from qrcode.image import pil
 
@@ -33,11 +37,9 @@ def generate_qr_code(url: str, name: str) -> Path:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate QR codes from URLs")
-    parser.add_argument("url", help="The URL to encode as a QR code", default="")
-    parser.add_argument("name", help="Name to use for the output files", default="default_qr")
-    args = parser.parse_args()
+    url = str(inquirer.text(message="Input the URL to encode as a QR code"))
+    name = str(inquirer.text(message="Input the name to use for the output files"))
 
-    png_file = generate_qr_code(url=args.url, name=args.name)
+    png_file = generate_qr_code(url=url, name=name)
 
     print(f"QR code saved to: {png_file}")
